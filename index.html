@@ -65,27 +65,52 @@
 <body>
   <h1>💖 Link Shopee com amor (e comissão)</h1>
   <p>Cole o link do produto abaixo e gere um link com o ID da sua amiga afiliada.</p>
+
+<textarea id="linkArea" placeholder="Cole vários links da Shopee, um por linha (MÁXIMO DE 50)..." rows="6" cols="50"></textarea>
+<button onclick="gerarLinks()">Gerar links afiliados</button>
+<div id="output"></div>
+
   
   <input type="url" id="linkInput" placeholder="Cole o link da Shopee aqui..." required>
-  <button onclick="gerarLink()">Gerar link afiliado</button>
+  <button onclick="gerarLink()">Gerar links afiliados</button>
 
   <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
+<script>
+  function gerarLinks() {
+    const input = document.getElementById('linkArea').value.trim();
+    const output = document.getElementById('output');
+    const idAfiliada = '18312330567';
+    output.innerHTML = '';
 
-  <script>
-    function gerarLink() {
-      const input = document.getElementById('linkInput');
-      const url = input.value.trim();
-      const idAfiliada = '18312330567';
-
-      if (!url || !url.startsWith("http")) {
-        alert("Link inválido. Você será redirecionado para o meu instagram para que eu possa gerar seu link manualmente. Desculpe pelo transtorno!");
-		    window.location.href = "https://www.instagram.com/ingriduckervinon";
-        return;
-      }
-
-      const linkAfiliado = `https://shope.ee/6AFiliado?utm_campaign=${idAfiliada}&utm_content=${encodeURIComponent(url)}`;
-      window.location.href = linkAfiliado;
+    if (!input) {
+      output.innerHTML = 'Por favor, cole ao menos um link.';
+      return;
     }
-  </script>
+
+    const linhas = input.split(/\\r?\\n/);
+    const linksValidos = [];
+    const linksInvalidos = [];
+
+    linhas.forEach(link => {
+      const url = link.trim();
+      if (url && url.startsWith("http")) {
+        const linkAfiliado = `https://shope.ee/6AFiliado?utm_campaign=${idAfiliada}&utm_content=${encodeURIComponent(url)}`;
+        linksValidos.push(linkAfiliado);
+      } else if (url) {
+        linksInvalidos.push(url);
+      }
+    });
+
+    if (linksValidos.length > 0) {
+      output.innerHTML += '<p>✅ Links gerados:</p><ul>' + linksValidos.map(l => `<li><a href="${l}" target="_blank">${l}</a></li>`).join('') + '</ul>';
+    }
+
+    if (linksInvalidos.length > 0) {
+      output.innerHTML += '<p>❌ Link(s) inválido(s):</p><ul>' + linksInvalidos.map(l => `<li>${l}</li>`).join('') + '</ul>';
+      output.innerHTML += '<p><a href="https://www.instagram.com/didishopee" target="_blank">Me chama no Instagram se tiver dúvida</a></p>';
+    }
+  }
+</script>
+
 </body>
 </html>
