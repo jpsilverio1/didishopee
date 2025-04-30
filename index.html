@@ -69,7 +69,7 @@
   <input type="url" id="linkInput" placeholder="Cole o link da Shopee aqui..." required>
   <button onclick="gerarLink()">Gerar link afiliado</button>
 
-  <footer>Powered by Jessica<br><a href="mailto:jessica@example.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
+  <footer>Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
 
   <script>
     function gerarLink() {
@@ -78,7 +78,8 @@
       const idAfiliada = '18312330567';
 
       if (!url || !url.startsWith("http")) {
-        alert("Por favor, insira um link válido da Shopee.");
+        alert("Link inválido. Você será redirecionado para o meu instagram para que eu possa gerar seu link manualmente. Desculpe pelo transtorno!");
+		    window.location.href = "https://www.instagram.com/ingriduckervinon";
         return;
       }
 
