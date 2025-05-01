@@ -60,6 +60,17 @@
       font-size: 0.9em;
       color: #ddd;
     }
+    .link-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.link-text {
+  flex: 1;
+  word-break: break-word;
+  margin-right: 10px;
+}
+
   </style>
 </head>
 <body>
@@ -73,7 +84,7 @@
   <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
 <script>
   function gerarLinks() {
-      const input = document.getElementById('inputLinks').value.trim();
+    const input = document.getElementById('linkArea').value.trim();
       const linkContainer = document.getElementById('linkContainer');
       linkContainer.innerHTML = ''; // Limpa os links anteriores
 
