@@ -5,16 +5,26 @@
   <title>Gerador de Link Afiliado - Shopee</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(135deg, #d00070, #6200ea);
       color: white;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       min-height: 100vh;
-      margin: 0;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 20px;
       box-sizing: border-box;
     }
@@ -36,6 +46,7 @@
       width: 80%;
       max-width: 500px;
       font-size: 1em;
+      resize: vertical;
     }
 
     button {
@@ -58,20 +69,31 @@
       display: flex;
       align-items: center;
       margin-bottom: 10px;
+      width: 100%;
+      max-width: 500px;
     }
 
     .link-text {
       flex: 1;
       word-break: break-word;
       margin-right: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 5px;
+      border-radius: 5px;
+    }
+
+    #linkContainer {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 500px;
     }
 
     footer {
-      position: absolute;
-      bottom: 10px;
+      background-color: rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 10px;
       font-size: 0.9em;
       color: #ddd;
-      text-align: center;
     }
 
     footer a {
@@ -81,15 +103,20 @@
   </style>
 </head>
 <body>
-  <h1>💖 Link Shopee com amor (e comissão)</h1>
-  <p>Cole os links dos produtos abaixo e gere links com o ID da sua amiga afiliada.</p>
+  <div class="container">
+    <h1>💖 Link Shopee com amor (e comissão)</h1>
+    <p>Cole os links dos produtos abaixo e gere links com o ID da sua amiga afiliada.</p>
 
-  <textarea id="linkArea" placeholder="Cole vários links da Shopee, um por linha (MÁXIMO DE 50)..." rows="6" cols="50"></textarea>
-  <button onclick="gerarLinks()">Gerar links afiliados</button>
+    <textarea id="linkArea" placeholder="Cole vários links da Shopee, um por linha (MÁXIMO DE 50)..." rows="6"></textarea>
+    <button onclick="gerarLinks()">Gerar links afiliados</button>
 
-  <div id="linkContainer"></div>
+    <div id="linkContainer"></div>
+  </div>
 
-  <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
+  <footer>
+    © Powered by Jéssica Silvério<br>
+    <a href="mailto:jpsilverio1mc@gmail.com">Fale comigo por e-mail</a> se desejar um site semelhante para você
+  </footer>
 
   <script>
     function gerarLinks() {
@@ -109,8 +136,15 @@
         const url = link.trim();
         if (url && url.startsWith('http')) {
           // Exemplo de geração de link afiliado
-          const linkAfiliado = `https://www.instagram.com/ingriduckervinon`;
-          linksValidos.push(linkAfiliado);
+          const linkAfiliado = `${url}?utm_campaign=18312330567`;
+          const fallBackLink = `https://www.instagram.com/ingriduckervinon`;
+           linksValidos.push(linkAfiliado);
+
+        } else {
+          console.alert("Não consegui converter pelo menos um dos links que você enviou. Por favor me mande diretamente em meu instagram.")
+          linksValidos.push(fallBackLink);
+        }
+                   
 
           const linkItem = document.createElement('div');
           linkItem.className = 'link-item';
@@ -138,7 +172,7 @@
       }
     }
 
-    function copiarTexto(texto) {
+    function copiarTexto(texto, "Link inválido - clique aqui para ir ao meu instagram") {
       navigator.clipboard.writeText(texto).then(() => {
         alert('Texto copiado para a área de transferência!');
       }).catch(err => {
