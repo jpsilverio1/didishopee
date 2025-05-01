@@ -73,39 +73,58 @@
   <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
 <script>
   function gerarLinks() {
-    const input = document.getElementById('linkArea').value.trim();
-    const output = document.getElementById('output');
-    const idAfiliada = '18312330567';
-    output.innerHTML = '';
+      const input = document.getElementById('inputLinks').value.trim();
+      const linkContainer = document.getElementById('linkContainer');
+      linkContainer.innerHTML = ''; // Limpa os links anteriores
 
-    if (!input) {
-      output.innerHTML = 'Por favor, cole ao menos um link.';
-      return;
-    }
-
-    const linhas = input.split(/\\r?\\n/);
-    const linksValidos = [];
-    const linksInvalidos = [];
-
-    linhas.forEach(link => {
-      const url = link.trim();
-      if (url && url.startsWith("http")) {
-        const linkAfiliado = `https://shope.ee/6AFiliado?utm_campaign=${idAfiliada}&utm_content=${encodeURIComponent(url)}`;
-        linksValidos.push(linkAfiliado);
-      } else if (url) {
-        linksInvalidos.push(url);
+      if (!input) {
+        alert('Por favor, insira ao menos um link.');
+        return;
       }
-    });
 
-    if (linksValidos.length > 0) {
-      output.innerHTML += '<p>✅ Links gerados:</p><ul>' + linksValidos.map(l => `<li><a href="${l}" target="_blank">${l}</a></li>`).join('') + '</ul>';
+      const linhas = input.split(/\r?\n/);
+      const linksValidos = [];
+
+      linhas.forEach((link, index) => {
+        const url = link.trim();
+        if (url && url.startsWith('http')) {
+          const linkAfiliado = `https://www.instagram.com/ingriduckervinon`;
+          linksValidos.push(linkAfiliado);
+
+          const linkItem = document.createElement('div');
+          linkItem.className = 'link-item';
+
+          const linkText = document.createElement('div');
+          linkText.className = 'link-text';
+          linkText.textContent = linkAfiliado;
+
+          const copyBtn = document.createElement('button');
+          copyBtn.textContent = 'Copiar';
+          copyBtn.onclick = () => copiarTexto(linkAfiliado);
+
+          linkItem.appendChild(linkText);
+          linkItem.appendChild(copyBtn);
+          linkContainer.appendChild(linkItem);
+        }
+      });
+
+      if (linksValidos.length > 0) {
+        const copyAllBtn = document.createElement('button');
+        copyAllBtn.id = 'copyAllBtn';
+        copyAllBtn.textContent = 'Copiar Todos';
+        copyAllBtn.onclick = () => copiarTexto(linksValidos.join('\n'));
+        linkContainer.prepend(copyAllBtn);
+      }
     }
 
-    if (linksInvalidos.length > 0) {
-      output.innerHTML += '<p>❌ Link(s) inválido(s):</p><ul>' + linksInvalidos.map(l => `<li>${l}</li>`).join('') + '</ul>';
-      output.innerHTML += '<p><a href="https://www.instagram.com/didishopee" target="_blank">Me chama no Instagram se tiver dúvida</a></p>';
+    function copiarTexto(texto) {
+      navigator.clipboard.writeText(texto).then(() => {
+        alert('Texto copiado para a área de transferência!');
+      }).catch(err => {
+        console.error('Erro ao copiar texto: ', err);
+      });
     }
-  }
+  
 </script>
 
 </body>
