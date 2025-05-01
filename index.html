@@ -29,7 +29,7 @@
       text-align: center;
     }
 
-    input[type="url"] {
+    textarea {
       padding: 10px;
       border: none;
       border-radius: 8px;
@@ -54,37 +54,46 @@
       background-color: #e68100;
     }
 
+    .link-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .link-text {
+      flex: 1;
+      word-break: break-word;
+      margin-right: 10px;
+    }
+
     footer {
       position: absolute;
       bottom: 10px;
       font-size: 0.9em;
       color: #ddd;
+      text-align: center;
     }
-    .link-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-}
-.link-text {
-  flex: 1;
-  word-break: break-word;
-  margin-right: 10px;
-}
 
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <h1>💖 Link Shopee com amor (e comissão)</h1>
-  <p>Cole o link do produto abaixo e gere um link com o ID da sua amiga afiliada.</p>
+  <p>Cole os links dos produtos abaixo e gere links com o ID da sua amiga afiliada.</p>
 
-<textarea id="linkArea" placeholder="Cole vários links da Shopee, um por linha (MÁXIMO DE 50)..." rows="6" cols="50"></textarea>
-<button onclick="gerarLinks()">Gerar links afiliados</button>
-<div id="output"></div>
+  <textarea id="linkArea" placeholder="Cole vários links da Shopee, um por linha (MÁXIMO DE 50)..." rows="6" cols="50"></textarea>
+  <button onclick="gerarLinks()">Gerar links afiliados</button>
 
-  <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com" style="color: #fff; text-decoration: underline;">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
-<script>
-  function gerarLinks() {
-    const input = document.getElementById('linkArea').value.trim();
+  <div id="linkContainer"></div>
+
+  <footer>© Powered by Jéssica Silvério<br><a href="mailto:jpsilverio1mc@gmail.com">Fale comigo por e-mail</a> se desejar um site semelhante para você</footer>
+
+  <script>
+    function gerarLinks() {
+      const input = document.getElementById('linkArea').value.trim();
       const linkContainer = document.getElementById('linkContainer');
       linkContainer.innerHTML = ''; // Limpa os links anteriores
 
@@ -96,9 +105,10 @@
       const linhas = input.split(/\r?\n/);
       const linksValidos = [];
 
-      linhas.forEach((link, index) => {
+      linhas.forEach((link) => {
         const url = link.trim();
         if (url && url.startsWith('http')) {
+          // Exemplo de geração de link afiliado
           const linkAfiliado = `https://www.instagram.com/ingriduckervinon`;
           linksValidos.push(linkAfiliado);
 
@@ -135,8 +145,6 @@
         console.error('Erro ao copiar texto: ', err);
       });
     }
-  
-</script>
-
+  </script>
 </body>
 </html>
