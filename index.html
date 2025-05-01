@@ -120,62 +120,65 @@
 
   <script>
     function gerarLinks() {
-      const input = document.getElementById('linkArea').value.trim();
-      const linkContainer = document.getElementById('linkContainer');
-      linkContainer.innerHTML = ''; // Limpa os links anteriores
+  const input = document.getElementById('linkArea').value.trim();
+  const linkContainer = document.getElementById('linkContainer');
+  linkContainer.innerHTML = ''; // Limpa os links anteriores
 
-      if (!input) {
-        alert('Por favor, insira ao menos um link.');
-        return;
-      }
+  if (!input) {
+    alert('Por favor, insira ao menos um link.');
+    return;
+  }
 
-      const linhas = input.split(/\r?\n/);
-      const linksValidos = [];
+  const linhas = input.split(/\r?\n/);
+  const linksValidos = [];
 
-      linhas.forEach((linkOriginal) => {
-        const url = linkOriginal.trim();
-        let linkAfiliado;
+  linhas.forEach((link) => {
+    const url = link.trim();
+    const linkItem = document.createElement('div');
+    linkItem.className = 'link-item';
 
-        if (url && url.startsWith('http')) {
-          linkAfiliado = `${url}?utm_campaign=18312330567`;
-        } else {
-          linkAfiliado = `https://www.instagram.com/ingriduckervinon`;
-        }
+    const linkText = document.createElement('div');
+    linkText.className = 'link-text';
 
-        linksValidos.push(linkAfiliado);
+    const copyBtn = document.createElement('button');
 
-        const linkItem = document.createElement('div');
-        linkItem.className = 'link-item';
+    if (url && url.startsWith('http')) {
+      // Exemplo de geração de link afiliado
+      const linkAfiliado = `${url}?utm_campaign=18312330567`;
+      linksValidos.push(linkAfiliado);
 
-        const linkText = document.createElement('div');
-        linkText.className = 'link-text';
-        linkText.textContent = linkAfiliado;
-
-        const copyBtn = document.createElement('button');
-        copyBtn.textContent = 'Copiar';
-        copyBtn.onclick = () => copiarTexto(linkAfiliado);
-
-        linkItem.appendChild(linkText);
-        linkItem.appendChild(copyBtn);
-        linkContainer.appendChild(linkItem);
-      });
-
-      if (linksValidos.length > 0) {
-        const copyAllBtn = document.createElement('button');
-        copyAllBtn.id = 'copyAllBtn';
-        copyAllBtn.textContent = 'Copiar Todos';
-        copyAllBtn.onclick = () => copiarTexto(linksValidos.join('\n'));
-        linkContainer.prepend(copyAllBtn);
-      }
+      linkText.textContent = linkAfiliado;
+      copyBtn.textContent = 'Copiar';
+      copyBtn.onclick = () => copiarTexto(linkAfiliado);
+    } else {
+      const fallBackLink = `https://www.instagram.com/ingriduckervinon`;
+      linkText.textContent = 'Link inválido - clique aqui para ir ao meu Instagram';
+      copyBtn.textContent = 'Ir ao Instagram';
+      copyBtn.onclick = () => window.location.href = fallBackLink;
     }
 
-    function copiarTexto(texto) {
-      navigator.clipboard.writeText(texto).then(() => {
-        alert('Texto copiado para a área de transferência!');
-      }).catch(err => {
-        console.error('Erro ao copiar texto: ', err);
-      });
-    }
+    linkItem.appendChild(linkText);
+    linkItem.appendChild(copyBtn);
+    linkContainer.appendChild(linkItem);
+  });
+
+  if (linksValidos.length > 0) {
+    const copyAllBtn = document.createElement('button');
+    copyAllBtn.id = 'copyAllBtn';
+    copyAllBtn.textContent = 'Copiar Todos';
+    copyAllBtn.onclick = () => copiarTexto(linksValidos.join('\n'));
+    linkContainer.prepend(copyAllBtn);
+  }
+}
+
+function copiarTexto(texto) {
+  navigator.clipboard.writeText(texto).then(() => {
+    alert('Texto copiado para a área de transferência!');
+  }).catch(err => {
+    console.error('Erro ao copiar texto: ', err);
+  });
+}
+
   </script>
 </body>
 </html>
